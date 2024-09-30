@@ -1,27 +1,29 @@
 package ru.sspo.timesheet_server.repository;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.*;
 import ru.sspo.timesheet_server.model.Timesheet;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-@Repository // @Component for classes that work with data
+@Repository
 public class TimesheetRepository {
 
     private static Long sequence = 1L;
     private final List<Timesheet> timesheets = new ArrayList<>();
 
     public Optional<Timesheet> getById(Long id) {
-        // select * from timesheets where id = $id
         return timesheets.stream()
-                .filter(t -> t.getId().equals(id))
+                .filter(timesheet -> timesheet.getId().equals(id))
                 .findFirst();
+    }
+
+    public List<Timesheet> getByProjectId(Long projectId) {
+        return timesheets.stream()
+                .filter(timesheet -> timesheet.getProjectId().equals(projectId))
+                .collect(Collectors.toList());
     }
 
 
