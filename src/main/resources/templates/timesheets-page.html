@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home / Timesheet Page</title>
+</head>
+<body>
+<h1>Working time recordings</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Record id</th>
+        <th>Project</th>
+        <th>Minutes spent</th>
+        <th>Created at</th>
+        <th>Go to record</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="timesheet : ${timesheets}">
+        <td><span th:text="${timesheet.id}"></span></td>
+        <td><a th:href="@{'/home/projects/{id}'(id=${timesheet.projectId})}">
+                <span th:text="${timesheet.projectName}"></span>
+            </a>
+        </td>
+<!--        <td><span th:text="${timesheet.projectName}"></span></td>-->
+        <td><span th:text="${timesheet.minutes}"></span></td>
+        <td><span th:text="${timesheet.createdAt}"></span></td>
+        <td><a th:href="@{'/home/timesheets/{id}'(id=${timesheet.id})}">link</a></td>
+    </tr>
+    </tbody>
+</table>
+<!--Project: <span th:text="${timesheet.projectName}"></span> <br>-->
+<!--Minutes spent: <span th:text="${timesheet.minutes}"></span> <br>-->
+<!--Created at: <span th:text="${timesheet.createdAt}"></span> <br>-->
+</body>
+</html>

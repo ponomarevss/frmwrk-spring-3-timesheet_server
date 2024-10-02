@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home / Timesheet Page</title>
+</head>
+<body>
+<h1>Working time recording #<span th:text="${timesheet.id}"></span> </h1>
+Project: <span th:text="${timesheet.projectName}"></span> <br>
+Minutes spent: <span th:text="${timesheet.minutes}"></span> <br>
+Created at: <span th:text="${timesheet.createdAt}"></span> <br>
+</body>
+</html>
