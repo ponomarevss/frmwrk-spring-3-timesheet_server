@@ -24,7 +24,6 @@
                 <span th:text="${timesheet.projectName}"></span>
             </a>
         </td>
-<!--        <td><span th:text="${timesheet.projectName}"></span></td>-->
         <td><span th:text="${timesheet.minutes}"></span></td>
         <td><span th:text="${timesheet.createdAt}"></span></td>
         <td><a th:href="@{'/home/timesheets/{id}'(id=${timesheet.id})}">link</a></td>
