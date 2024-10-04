@@ -51,9 +51,6 @@ public class ProjectController {
     @GetMapping("/{projectId}/timesheets")
     public ResponseEntity<List<Timesheet>> getTimesheets(@PathVariable(name = "projectId") Long id){
         List<Timesheet> timesheets = service.getProjectTimesheets(id);
-        if (timesheets == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(timesheets);
     }
 }

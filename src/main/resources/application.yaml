@@ -1,0 +1,11 @@
+#spring.application.name=frmwrk-spring-3-timesheet_server
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/timesheet-db
+    username: root
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update

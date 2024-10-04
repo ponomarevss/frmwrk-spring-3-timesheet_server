@@ -4,19 +4,15 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.time.LocalDateTime;
-
 @Data
 @Entity
-@Table(name = "timesheet")
-public class Timesheet {
+@Table(name = "employee")
+public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @EqualsAndHashCode.Include
     private Long id;
-    private Long projectId;
-    private Long employeeId;
-    private Integer minutes;
-    private LocalDateTime createdAt;
+    private String name;
+    private String email;
 }

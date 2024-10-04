@@ -7,7 +7,6 @@ import ru.sspo.timesheet_server.model.Timesheet;
 import ru.sspo.timesheet_server.service.TimesheetService;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -22,7 +21,7 @@ public class TimesheetController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Timesheet> get(@PathVariable Long id) {
-        Optional<Timesheet> optionalTimesheet = service.getById(id);
+        Optional<Timesheet> optionalTimesheet = service.findById(id);
 
         return optionalTimesheet.map(timesheet -> ResponseEntity.status(HttpStatus.OK).body(timesheet))
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -31,7 +30,7 @@ public class TimesheetController {
 
     @GetMapping
     public ResponseEntity<List<Timesheet>> getAll() {
-        return ResponseEntity.ok(service.getAll());
+        return ResponseEntity.ok(service.findAll());
     }
 
     @PostMapping
@@ -44,15 +43,5 @@ public class TimesheetController {
         service.delete(id);
 
         return ResponseEntity.noContent().build();
-    }
-
-    @ExceptionHandler(IllegalAccessException.class)
-    public ResponseEntity<?> handleIllegalAccessException(IllegalArgumentException e) {
-        return ResponseEntity.badRequest().build();
-    }
-
-    @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<?> handleNoSuchElementException(NoSuchElementException e) {
-        return ResponseEntity.notFound().build();
     }
 }

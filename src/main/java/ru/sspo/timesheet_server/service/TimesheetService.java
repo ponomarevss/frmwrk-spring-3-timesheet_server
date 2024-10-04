@@ -1,7 +1,9 @@
 package ru.sspo.timesheet_server.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.sspo.timesheet_server.model.Timesheet;
+import ru.sspo.timesheet_server.repository.EmployeeRepository;
 import ru.sspo.timesheet_server.repository.ProjectRepository;
 import ru.sspo.timesheet_server.repository.TimesheetRepository;
 
@@ -12,36 +14,46 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class TimesheetService {
 
     private final TimesheetRepository timesheetRepository;
     private final ProjectRepository projectRepository;
+    private final EmployeeRepository employeeRepository;
 
-    public TimesheetService(TimesheetRepository timesheetRepository, ProjectRepository projectRepository) {
-        this.timesheetRepository = timesheetRepository;
-        this.projectRepository = projectRepository;
+    public Optional<Timesheet> findById(Long id) {
+        return timesheetRepository.findById(id);
     }
 
-    public Optional<Timesheet> getById(Long id) {
-        return timesheetRepository.getById(id);
-    }
-
-    public List<Timesheet> getAll() {
-        return timesheetRepository.getAll();
+    public List<Timesheet> findAll() {
+        return timesheetRepository.findAll();
     }
 
     public Timesheet create(Timesheet timesheet) {
-        if (Objects.isNull(timesheet.getProjectId())) {
-            throw new IllegalArgumentException("Project must not be null");
+        Long projectId = timesheet.getProjectId();
+        Long employeeId = timesheet.getEmployeeId();
+
+        if (Objects.isNull(projectId)) {
+            throw new IllegalArgumentException("Project id must not be null");
         }
-        if (projectRepository.getById(timesheet.getProjectId()).isEmpty()) {
-            throw new NoSuchElementException("Project with id " + timesheet.getProjectId() + " does not exist");
+        if (Objects.isNull(employeeId)) {
+            throw new IllegalArgumentException("Employee id must not be null");
         }
+        if (projectRepository.findById(projectId).isEmpty()) {
+            throw new NoSuchElementException("Project with id " + projectId + " does not exist");
+        }
+        if (employeeRepository.findById(employeeId).isEmpty()) {
+            throw new NoSuchElementException("Employee with id " + employeeId + " does not exist");
+        }
+
         timesheet.setCreatedAt(LocalDateTime.now());
-        return timesheetRepository.create(timesheet);
+        return timesheetRepository.save(timesheet);
     }
 
     public void delete(Long id){
-        timesheetRepository.delete(id);
+        if (timesheetRepository.findById(id).isEmpty()) {
+            throw new NoSuchElementException("Timesheet with id " + id + " does not exist");
+        }
+        timesheetRepository.deleteById(id);
     }
 }

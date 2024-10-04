@@ -17,11 +17,11 @@ public class TimesheetPageService {
     private final ProjectService projectService;
 
     public List<TimesheetPageDto> findAll() {
-        return timesheetService.getAll().stream().map(this::convert).toList();
+        return timesheetService.findAll().stream().map(this::convert).toList();
     }
 
     public Optional<TimesheetPageDto> findById(Long id) {
-        return timesheetService.getById(id).map(this::convert);
+        return timesheetService.findById(id).map(this::convert);
     }
 
     private TimesheetPageDto convert(Timesheet timesheet) {
