@@ -1,4 +1,4 @@
-package ru.sspo.timesheet_server.controller;
+package ru.sspo.timesheet_server.rest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,11 +10,6 @@ import java.util.NoSuchElementException;
 @RestControllerAdvice
 public class ExceptionController {
 
-    /**
-     * Exception handlers for all Controllers
-     * */
-
-
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ExceptionResponse> handleIllegalArgumentException(IllegalArgumentException e) {
         ExceptionResponse exceptionResponse = new ExceptionResponse();
@@ -23,7 +18,7 @@ public class ExceptionController {
     }
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<?> handleNoSuchElementException(NoSuchElementException e) {
+    public ResponseEntity<ExceptionResponse> handleNoSuchElementException(NoSuchElementException e) {
         ExceptionResponse exceptionResponse = new ExceptionResponse();
         exceptionResponse.setReason(e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exceptionResponse);

@@ -1,4 +1,4 @@
-package ru.sspo.timesheet_server.controller;
+package ru.sspo.timesheet_server.rest;
 
 import lombok.Data;
 

@@ -9,6 +9,7 @@ import ru.sspo.timesheet_server.repository.TimesheetRepository;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -27,6 +28,11 @@ public class EmployeeService {
     }
 
     public Employee create(Employee employee) {
+        String name = employee.getName();
+
+        if (Objects.isNull(name) || name.isEmpty()) {
+            throw new IllegalArgumentException("Employee name must not be null or empty");
+        }
         return employeeRepository.save(employee);
     }
 
